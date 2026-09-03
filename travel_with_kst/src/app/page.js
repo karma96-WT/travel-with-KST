@@ -1,9 +1,11 @@
-import Image from "next/image";
+import Navbar from "./components/navbar";
+import Home from "./home/page";
 
-export default function Home() {
+export default function Page() {
   return (
-    <div className="text-center">
-      Travel with KST
-    </div>
+    <>
+      <Navbar />
+      <Home />
+    </>
   );
 }
