@@ -21,13 +21,9 @@ function Icon({ name, ...props }) {
 }
 function Brand() {
   return (
-    <img
-      src="/images/logo.jpeg"
-      alt="Travel with KST"
-      width={180}
-      height={64}
-      style={{ width: "180px", height: "64px", objectFit: "contain" }}
-    />
+    <div className="text-center">
+      Travel with KST
+    </div>
   );
 }
 export default function Home() {
