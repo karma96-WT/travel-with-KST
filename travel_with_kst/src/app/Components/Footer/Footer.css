@@ -1,0 +1,118 @@
+/* Main Outer Box Container */
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background-color: #ffffff;
+  border: 2px solid #1a1a1a;
+  border-radius: 24px;
+  padding: 2.5rem 3rem;
+  margin: 2rem auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  width: 100vw;
+  position:fixed;
+  bottom: 0;
+  left: 0;
+}
+
+/* Individual Footer Columns */
+.footer-column {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Left Section: Brand / Logo */
+.footer-brand {
+  max-width: 220px;
+}
+
+.footer-logo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #1a1a1a;
+  margin-bottom: 0.75rem;
+}
+.footer-logo:hover{
+    cursor: pointer;
+    scale: 1.2;
+}
+
+.footer-tagline {
+  font-size: 0.9rem;
+  color: #0c5ce6;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Headings */
+.footer-heading {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 1rem;
+}
+
+/* Center Section: Links */
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-links a {
+  text-decoration: none;
+  color: #2d3748;
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: #0284c7;
+  text-decoration: underline;
+}
+
+/* Right Section: Contacts / Social Circles */
+.footer-contacts {
+  align-items: flex-start;
+}
+
+.social-icons {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.icon-circle {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 2px solid #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1a1a1a;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  background-color: #ffffff;
+}
+
+.icon-circle:hover {
+  color: #ffffff;
+  transform: translateY(-3px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    gap: 2rem;
+    padding: 1.5rem;
+  }
+}
