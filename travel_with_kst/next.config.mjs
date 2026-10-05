@@ -1,12 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
-  basePath: '/travel-with-KST',
+  output: 'export', // Creates the 'out' directory during build
+  basePath: '/travel-with-KST', // Matches your repo name
   images: {
     unoptimized: true,
   },
-  // If your GitHub repo is named "travel_with_kst", set basePath:
-  // basePath: '/travel_with_kst',
 };
 
 export default nextConfig;
