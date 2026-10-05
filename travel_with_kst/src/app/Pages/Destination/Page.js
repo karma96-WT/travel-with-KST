@@ -18,7 +18,7 @@ function Destination() {
         </div>  
         <div className='w-[55%] p-10 text-white flex justify-around gap-1'>
             <div className='border-2 border-white rounded-lg  w-[50%] bg-white'>
-                <img src='/images/logo.jpeg' className='w-full h-[45%] rounded-lg'/>
+            <img src={`${basePath}/images/logo.jpeg`} className='w-full h-[45%] rounded-lg'/>
                 <p className='font-bold text-black p-1 text-xl'>
                     10 Must-vist Hidden Places
                 </p>
@@ -28,7 +28,7 @@ function Destination() {
                 <div className='flex justify-center'><button className='text-white border-blue-600 p-1 m-1 bg-blue-600 rounded-lg'>Read More</button></div>
             </div>
             <div className='border-2 border-white rounded-lg  w-[50%] bg-white'>
-                <img src='/images/logo.jpeg' className='w-full h-[45%] rounded-lg'/>
+                <img src={`${basePath}/images/logo.jpeg`} className='w-full h-[45%] rounded-lg'/>
                 <p className='font-bold text-black p-1 text-xl'>
                     10 Must-vist Hidden Places
                 </p>
