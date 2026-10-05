@@ -1,13 +1,15 @@
 import React from 'react';
 import './NavBar.css';
 
+const basePath = process.env.NODE_ENV === 'production' ? '/travel-with-KST' : '';
+
 function NavBar() {
   return (
     <div className="navbar-container">
       {/* Left side: Logo */}
       <img
         className="logo"
-        src="images/logo.jpeg"
+        src={`${basePath}/images/logo.jpeg`}
         alt="Logo"
         width="60"
         height="60"
