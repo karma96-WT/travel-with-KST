@@ -2,7 +2,7 @@ name: Deploy Next.js site to Pages
 
 on:
   push:
-    branches: ["main"]
+    branches: ["main"] # Triggers automatically when a PR is merged into main
 
 permissions:
   contents: read
@@ -19,8 +19,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    
-    # Tell GitHub Actions that all commands should run inside the subfolder
+
     defaults:
       run:
         working-directory: ./travel_with_kst
@@ -45,7 +44,6 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Point to the 'out' folder inside your subfolder
           path: './travel_with_kst/out'
 
       - name: Deploy to GitHub Pages
