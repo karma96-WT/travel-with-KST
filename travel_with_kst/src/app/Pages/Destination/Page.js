@@ -1,8 +1,14 @@
 import React from 'react'
 
+const basePath = process.env.NODE_ENV === 'production' ? '/travel-with-KST' : '';
+
 function Destination() {
   return (
-    <div className="flex justify-around  p-10 bg-[url('/images/Destination-background-image.jpg')] bg-cover bg-center w-screen h-screen">
+    <div 
+    style={{ 
+        backgroundImage: `url('${basePath}/images/Destination-background-image.jpg')` 
+      }} 
+    className="flex justify-around  p-10 bg-cover bg-center w-screen h-screen">
         <div className='w-[45%]'>
             <h1 className='text-white'>EXPLORE</h1>
             <h1 className='text-white'>DREAM</h1>
