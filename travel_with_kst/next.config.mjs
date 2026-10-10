@@ -1,7 +1,10 @@
 /** @type {import('next').NextConfig} */
+const isProd = process.env.NODE_ENV === 'production';
+
 const nextConfig = {
-  output: 'export', // Creates the 'out' directory during build
-  basePath: '/travel-with-KST', // Matches your repo name
+  output: 'export',
+  // Only apply basePath when building for GitHub Pages production
+  basePath: isProd ? '/travel-with-KST' : '',
   images: {
     unoptimized: true,
   },

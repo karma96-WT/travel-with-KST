@@ -27,7 +27,7 @@ function Destination() {
                 </p>
                 <div className='flex justify-center'><button className='text-white border-blue-600 p-1 m-1 bg-blue-600 rounded-lg'>Read More</button></div>
             </div>
-            <div className='border-2 border-white rounded-lg  w-[50%] bg-white'>
+            <div className='border-2 border-white rounded-lg  w-[50%] h-full bg-white '>
                 <img src={`${basePath}/images/logo.jpeg`} className='w-full h-[45%] rounded-lg'/>
                 <p className='font-bold text-black p-1 text-xl'>
                     10 Must-vist Hidden Places
