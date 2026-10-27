@@ -54,7 +54,7 @@ export default function Navbar() {
             </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-1 text-white">
+            <div className="hidden md:flex items-center gap-1 text-white ml-auto justify-end">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
@@ -98,7 +98,7 @@ export default function Navbar() {
               isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
             }`}
           >
-            <div className="px-6 pb-6 pt-2 space-y-1 text-white">
+            <div className="px-6 pb-6 pt-2 space-y-1 text-white text-right">
               {navLinks.map((link, index) => (
                 <Link
                   key={link.name}
@@ -107,7 +107,7 @@ export default function Navbar() {
                   className="block text-white/90 hover:text-white hover:bg-white/10 px-4 py-3 rounded-xl text-base font-medium tracking-wide transition-all duration-300"
                   style={{
                     transitionDelay: isOpen ? `${index * 50}ms` : "0ms",
-                    transform: isOpen ? "translateX(0)" : "translateX(-20px)",
+                    transform: isOpen ? "translateX(0)" : "translateX(20px)",
                     opacity: isOpen ? 1 : 0,
                   }}
                 >

@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api-config
+  namespace: travel-with-kst
+  labels:
+    app: api
+data:
+  DB_HOST: postgres
+  DB_PORT: "5432"
+  DB_NAME: travel-with-kst

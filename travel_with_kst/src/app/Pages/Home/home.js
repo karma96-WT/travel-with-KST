@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[#0a1f0f]">
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center overflow-hidden">
+      <section className="relative min-h-screen flex flex-col lg:flex-row items-center overflow-hidden">
         {/* Forest Background Image */}
         <div className="absolute inset-0 z-0">
           {/* Replace the src below with your actual forest image path */}

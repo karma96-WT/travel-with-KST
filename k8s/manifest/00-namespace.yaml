@@ -1,0 +1,7 @@
+﻿apiVersion: v1
+kind: Namespace
+metadata:
+  name: travel-with-kst
+  labels:
+    app.kubernetes.io/part-of: travel-with-kst
+    owner: kst

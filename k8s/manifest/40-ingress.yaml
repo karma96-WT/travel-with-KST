@@ -1,0 +1,45 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kst-ingress
+  namespace: travel-with-kst
+  labels:
+    app: travel-with-kst                       # was: api — this Ingress now serves two tiers
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: travel-with-kst.local
+      http:
+        paths:
+          # ─── Backend (Flask) ─────────────────────────────
+          - path: /users
+            pathType: Prefix
+            backend:
+              service:
+                name: api
+                port:
+                  number: 80
+          - path: /healthz
+            pathType: Prefix
+            backend:
+              service:
+                name: api
+                port:
+                  number: 80
+          - path: /ready
+            pathType: Prefix
+            backend:
+              service:
+                name: api
+                port:
+                  number: 80
+          # ─── Frontend (nginx static) ─────────────────────
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend
+                port:
+                  number: 80
