@@ -2,9 +2,8 @@
 const isProd = process.env.NODE_ENV === 'production';
 
 const nextConfig = {
-  output: 'export',
-  // Only apply basePath when building for GitHub Pages production
-  basePath: isProd ? '/travel-with-KST' : '',
+  output: 'export', // Creates the 'out' directory during build
+  basePath: process.env.NODE_ENV === 'production' ? '/travel-with-KST' : '', // GitHub Pages prefix for production
   images: {
     unoptimized: true,
   },

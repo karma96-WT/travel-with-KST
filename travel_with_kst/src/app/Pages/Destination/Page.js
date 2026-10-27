@@ -5,7 +5,7 @@ const basePath = process.env.NODE_ENV === 'production' ? '/travel-with-KST' : ''
 function Destination() {
   return (
     <div 
-    style={{ 
+    style={{    
         backgroundImage: `url('${basePath}/images/Destination-background-image.jpg')` 
       }} 
     className="flex justify-around  p-10 bg-cover bg-center w-screen h-screen">
