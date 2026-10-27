@@ -1,5 +1,7 @@
-import { redirect } from "next/navigation";
+import Destination from "./Pages/Destination/Page";
 
-export default function Home() {
-  redirect("/blog");
+function HomePage() {
+  return <Destination />;
 }
+
+export default HomePage;
