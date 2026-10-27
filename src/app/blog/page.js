@@ -1,4 +1,3 @@
-// import BlogPage from "./blog";
 
 // export default function Page() {
 //   return <BlogPage />;
