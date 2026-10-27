@@ -1,5 +1,13 @@
+// import BlogPage from "./blog";
+
+// export default function Page() {
+//   return <BlogPage />;
+// }
+
 import Link from 'next/link';
 import Image from 'next/image';
+
+const publicImageBase = process.env.NODE_ENV === 'production' ? '/travel-with-KST' : '';
 
 // --- Mock Data ---
 const blogPosts = [
@@ -79,13 +87,13 @@ export default function BlogPage() {
     <div className="min-h-screen bg-white font-sans overflow-x-hidden">
       <section
         aria-labelledby="blog-heading"
-        className="relative isolate mb-[26px] flex min-h-[520px] w-full items-center overflow-hidden bg-[#244235] px-6 pb-[75px] pt-10 text-[#fffdf5] min-[441px]:px-7 min-[761px]:px-[clamp(28px,6vw,110px)] min-[761px]:pb-[84px] min-[761px]:pt-[58px] min-[1600px]:min-h-[570px]"
+        className="relative isolate mb-[26px] flex min-h-screen w-full items-center overflow-hidden bg-[#244235] px-6 pb-[75px] pt-10 text-[#fffdf5] min-[441px]:px-7 min-[761px]:px-[clamp(28px,6vw,110px)] min-[761px]:pb-[84px] min-[761px]:pt-[58px]"
       >
         {/* Background photo */}
         <figure className="absolute inset-0 -z-20 m-0">
           <div className="absolute inset-0">
             <Image
-              src="/travel-with-KST/images/background.jpg"
+              src={`${publicImageBase}/images/background.jpeg`}
               alt="A golden-roofed Bhutanese temple surrounded by trees and a forested hillside"
               fill
               priority

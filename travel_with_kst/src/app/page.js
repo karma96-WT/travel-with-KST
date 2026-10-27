@@ -1,7 +1,13 @@
-import Destination from "./Pages/Destination/Page";
+import React from "react";
+import Home from "../app/Pages/Home/home";
 
 function HomePage() {
-  return <Destination />;
+  return (
+    <div>
+      <Home />
+    </div>
+  );
 }
 
 export default HomePage;
+
