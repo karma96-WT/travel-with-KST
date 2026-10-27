@@ -1,3 +1,4 @@
+# This file defines a Deployment for the API service in the travel-with-kst application.
 apiVersion: apps/v1
 kind: Deployment
 metadata:

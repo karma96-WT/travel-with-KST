@@ -1,3 +1,4 @@
+# This file defines a HorizontalPodAutoscaler for the API deployment in the travel-with-kst application. It automatically scales the number of replicas based on CPU utilization, with specified minimum and maximum replica counts, and includes scaling behavior settings for both scale-up and scale-down actions.
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:

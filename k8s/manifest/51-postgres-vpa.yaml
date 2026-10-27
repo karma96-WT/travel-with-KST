@@ -1,3 +1,4 @@
+# This file defines a VerticalPodAutoscaler for the PostgreSQL StatefulSet in the travel-with-kst application. It specifies the target StatefulSet, update policy, and resource policies for the PostgreSQL container, including minimum and maximum allowed CPU and memory resources, as well as controlled resources and values.
 apiVersion: autoscaling.k8s.io/v1
 kind: VerticalPodAutoscaler
 metadata:

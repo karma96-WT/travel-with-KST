@@ -1,3 +1,4 @@
+# This file defines a ConfigMap for storing API configuration settings for the travel-with-kst application.
 apiVersion: v1
 kind: ConfigMap
 metadata:

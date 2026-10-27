@@ -1,3 +1,4 @@
+# This file defines a Service for the frontend in the travel-with-kst application.
 apiVersion: v1
 kind: Service
 metadata:

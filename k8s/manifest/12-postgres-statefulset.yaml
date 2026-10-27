@@ -1,3 +1,4 @@
+# This file defines a StatefulSet for deploying a PostgreSQL database in the travel-with-kst application.
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
