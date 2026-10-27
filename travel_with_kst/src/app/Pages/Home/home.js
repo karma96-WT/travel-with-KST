@@ -2,6 +2,7 @@
 
 // home.js
 import { useEffect, useState } from "react";
+import Card from "./card";
 
 export default function Home() {
   const [isVisible, setIsVisible] = useState(false);
@@ -123,12 +124,17 @@ export default function Home() {
                   />
                 </svg>
               </button>
-
-              <button className="inline-flex items-center gap-2 bg-transparent hover:bg-white/10 text-white font-semibold px-7 py-3.5 rounded-full border-2 border-white/40 hover:border-white/70 transition-all duration-300 hover:scale-105 active:scale-95 backdrop-blur-sm">
-                Get the app
-              </button>
             </div>
           </div>
+        </div>
+
+        {/* RIGHT: Card Carousel */}
+        <div
+          className={`relative z-10 min-w-0 w-full overflow-visible transition-all duration-1000 delay-300 ease-out ${
+            isVisible ? "translate-x-0 opacity-100" : "translate-x-8 opacity-0"
+          }`}
+        >
+          <Card />
         </div>
 
         {/* Scroll indicator */}
@@ -146,44 +152,6 @@ export default function Home() {
               d="M19 14l-7 7m0 0l-7-7m7 7V3"
             />
           </svg>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="relative py-20 bg-[#0a1f0f]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: "🌍",
-                title: "Explore Destinations",
-                desc: "Discover breathtaking locations around the world curated by travel experts.",
-              },
-              {
-                icon: "🎒",
-                title: "Curated Packages",
-                desc: "Handpicked travel packages designed for every type of adventurer.",
-              },
-              {
-                icon: "📱",
-                title: "Easy Booking",
-                desc: "Seamless booking experience with our intuitive mobile app.",
-              },
-            ].map((feature, idx) => (
-              <div
-                key={idx}
-                className="group p-8 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-500 hover:-translate-y-2"
-              >
-                <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">
-                  {feature.icon}
-                </div>
-                <h3 className="text-white text-xl font-bold mb-3">
-                  {feature.title}
-                </h3>
-                <p className="text-white/70 leading-relaxed">{feature.desc}</p>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
     </div>
