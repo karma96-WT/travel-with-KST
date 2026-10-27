@@ -1,0 +1,8 @@
+﻿# This file defines the namespace for the travel-with-kst application in Kubernetes.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: travel-with-kst
+  labels:
+    app.kubernetes.io/part-of: travel-with-kst
+    owner: kst

@@ -54,29 +54,12 @@ const cards = [
   },
 ];
 
-const COPIES = 5;
-const CENTER_COPY = 2;
-const INITIAL_CARD = 3;
-
-const repeatedCards = Array.from({ length: COPIES }, (_, copy) =>
-  cards.map((card, index) => ({
-    ...card,
-    logicalIndex: index,
-    physicalIndex: copy * cards.length + index,
-  })),
-).flat();
-
-const initialIndex = CENTER_COPY * cards.length + INITIAL_CARD;
-
 export default function Card() {
   const trackRef = useRef(null);
   const cardRefs = useRef([]);
-  const activeRef = useRef(initialIndex);
-  const resumeTimerRef = useRef(null);
-  const repositioningRef = useRef(false);
+  const activeRef = useRef(0);
 
-  const [activeIndex, setActiveIndex] = useState(initialIndex);
-  const [paused, setPaused] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const scrollToCard = useCallback((index, behavior = "smooth") => {
     const track = trackRef.current;
@@ -89,51 +72,21 @@ export default function Card() {
     track.scrollTo({ left, behavior });
   }, []);
 
-  // Reposition to an identical card in the center copy without skipping it.
-  const normalizeIndex = useCallback(
-    (index) => {
-      const logicalIndex =
-        ((index % cards.length) + cards.length) % cards.length;
-
-      const centeredIndex = CENTER_COPY * cards.length + logicalIndex;
-
-      if (index === centeredIndex) return centeredIndex;
-
-      repositioningRef.current = true;
-      activeRef.current = centeredIndex;
-      setActiveIndex(centeredIndex);
-      scrollToCard(centeredIndex, "instant");
-
-      requestAnimationFrame(() => {
-        repositioningRef.current = false;
-      });
-
-      return centeredIndex;
-    },
-    [scrollToCard],
-  );
-
   const moveTo = useCallback(
     (requestedIndex, behavior = "smooth") => {
-      const copyIndex = Math.floor(requestedIndex / cards.length);
-
-      // Keep navigation inside the middle copies for endless scrolling.
-      const index =
-        copyIndex <= 1 || copyIndex >= 3
-          ? normalizeIndex(requestedIndex)
-          : requestedIndex;
+      const index = Math.max(0, Math.min(requestedIndex, cards.length - 1));
 
       activeRef.current = index;
       setActiveIndex(index);
       scrollToCard(index, behavior);
     },
-    [normalizeIndex, scrollToCard],
+    [scrollToCard],
   );
 
   const updateActiveCard = useCallback(() => {
     const track = trackRef.current;
 
-    if (!track || repositioningRef.current) return;
+    if (!track) return;
 
     const center = track.getBoundingClientRect().left + track.clientWidth / 2;
 
@@ -152,18 +105,11 @@ export default function Card() {
       }
     });
 
-    const copyIndex = Math.floor(nearestIndex / cards.length);
-
-    if (copyIndex <= 1 || copyIndex >= 3) {
-      normalizeIndex(nearestIndex);
-      return;
-    }
-
     activeRef.current = nearestIndex;
     setActiveIndex((current) =>
       current === nearestIndex ? current : nearestIndex,
     );
-  }, [normalizeIndex]);
+  }, []);
 
   // Center the starting card on first render.
   useEffect(() => {
@@ -175,18 +121,7 @@ export default function Card() {
     return () => cancelAnimationFrame(frame);
   }, [scrollToCard, updateActiveCard]);
 
-  // Auto-advance every five seconds.
-  useEffect(() => {
-    if (paused) return;
-
-    const interval = setInterval(() => {
-      moveTo(activeRef.current + 1);
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [paused, moveTo]);
-
-  // Detect the card closest to the center while swiping.
+  // Update the active card as the user scrolls.
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
@@ -194,8 +129,6 @@ export default function Card() {
     let frame = null;
 
     const handleScroll = () => {
-      if (repositioningRef.current) return;
-
       if (frame !== null) cancelAnimationFrame(frame);
 
       frame = requestAnimationFrame(() => {
@@ -211,30 +144,6 @@ export default function Card() {
       if (frame !== null) cancelAnimationFrame(frame);
     };
   }, [updateActiveCard]);
-
-  const pauseAutoplay = useCallback(() => {
-    setPaused(true);
-
-    if (resumeTimerRef.current) {
-      clearTimeout(resumeTimerRef.current);
-      resumeTimerRef.current = null;
-    }
-  }, []);
-
-  const resumeAutoplay = useCallback(() => {
-    if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
-
-    resumeTimerRef.current = setTimeout(() => {
-      setPaused(false);
-      resumeTimerRef.current = null;
-    }, 1500);
-  }, []);
-
-  useEffect(() => {
-    return () => {
-      if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
-    };
-  }, []);
 
   const goToNext = useCallback(() => {
     moveTo(activeRef.current + 1);
@@ -257,16 +166,9 @@ export default function Card() {
           WebkitOverflowScrolling: "touch",
           touchAction: "pan-x pan-y",
         }}
-        onMouseEnter={pauseAutoplay}
-        onMouseLeave={resumeAutoplay}
-        onTouchStart={pauseAutoplay}
-        onTouchEnd={resumeAutoplay}
-        onTouchCancel={resumeAutoplay}
-        onFocusCapture={pauseAutoplay}
-        onBlurCapture={resumeAutoplay}
         aria-label="Featured product design cards"
       >
-        {repeatedCards.map((card, index) => {
+        {cards.map((card, index) => {
           const distance = Math.abs(index - activeIndex);
           const isActive = distance === 0;
 
@@ -286,7 +188,7 @@ export default function Card() {
 
           return (
             <article
-              key={`${card.physicalIndex}-${card.title}`}
+              key={card.title}
               ref={(element) => {
                 cardRefs.current[index] = element;
               }}
@@ -359,7 +261,7 @@ export default function Card() {
                 </p>
               </div>
 
-              {isActive && (
+              {isActive && index < cards.length - 1 && (
                 <button
                   type="button"
                   aria-label="Go to next card"
