@@ -2,16 +2,15 @@ name: Continuous Integration
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
-  ci-checks:
+  ci-pipeline:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./travel_with_kst # Set to your Next.js subfolder
 
     steps:
       - name: Checkout repository
@@ -22,7 +21,6 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
-          cache-dependency-path: './travel_with_kst/package-lock.json'
 
       - name: Install dependencies
         run: npm install
@@ -30,7 +28,7 @@ jobs:
       - name: Check code formatting/linting
         run: npm run lint --if-present
 
-      - name: Run automated tests
+      - name: Run tests
         run: npm test --if-present
 
       - name: Build project
