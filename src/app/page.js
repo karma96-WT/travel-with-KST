@@ -1,5 +1,5 @@
 import React from "react";
-import Home from "../app/Pages/Home/home";
+import Home from "./Pages/Home/page.js";
 
 function HomePage() {
   return (
@@ -10,4 +10,3 @@ function HomePage() {
 }
 
 export default HomePage;
-
