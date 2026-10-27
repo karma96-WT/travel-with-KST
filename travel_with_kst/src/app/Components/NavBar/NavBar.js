@@ -21,7 +21,7 @@ export default function Navbar() {
     { name: "About", href: "/About" },
     { name: "Destination", href: "/Pages/Destination" },
     { name: "Packages", href: "/packages" },
-    { name: "Blog", href: "/Blog" },
+    { name: "Blog", href: "/blog" },
   ];
 
   return (
@@ -47,9 +47,6 @@ export default function Navbar() {
                   alt="Logo"
                   className="navbar-logo w-10 h-10"
                 />
-                <p className="navbar-tagline text-white text-lg font-bold">
-                  Travel with KST
-                </p>
               </div>
             </Link>
 

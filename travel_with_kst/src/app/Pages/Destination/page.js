@@ -1,6 +1,6 @@
 import React from 'react'
 
-const basePath = process.env.NODE_ENV === 'production' ? '/travel-with-KST' : '';
+const basePath = '/travel-with-KST';
 
 function Destination() {
   return (
