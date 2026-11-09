@@ -1,7 +1,13 @@
 @import "tailwindcss";
 :root{--background:#f8f7f2;--foreground:#203b33;--green:#203b33;--orange:#e8a16b}
 
-@theme inline{--color-background:var(--background);--color-foreground:var(--foreground);--font-sans:var(--font-geist-sans);--font-mono:var(--font-geist-mono)}
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-display: var(--font-playfair), Georgia, serif;
+  --font-body: var(--font-dmsans), system-ui, sans-serif;
+  --font-sans: var(--font-dmsans), system-ui, sans-serif;
+}
 
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -243,4 +249,6 @@ to{opacity:1;transform:translateY(0)}
 *,*::before,*::after{animation:none!important;transition:none!important}
 }
 
-
+html {
+  font-size: 120%; /* 17px instead of 16px */
+}
