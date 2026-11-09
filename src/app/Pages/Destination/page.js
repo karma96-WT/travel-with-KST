@@ -37,7 +37,6 @@ function Destination() {
           ancient fortress dzongs to legendary mountain passes, discover tailored trekking routes
           crafted to awaken your spirit of adventure.
         </p>
-        <button className="text-white bg-blue-600 p-2 rounded-lg mt-10">BOOK NOW</button>
       </div>
 
       <div className="w-[55%] p-10 flex flex-col items-center gap-4">
