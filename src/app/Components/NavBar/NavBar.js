@@ -4,7 +4,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-const BASE = process.env.NODE_ENV === 'production' ? '/travel-with-KST' : ''
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? (process.env.NODE_ENV === 'production' ? '/travel-with-KST' : '')
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);

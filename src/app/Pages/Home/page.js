@@ -4,6 +4,8 @@
 import { useEffect, useState } from "react";
 import Card from "./card";
 
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? (process.env.NODE_ENV === "production" ? "/travel-with-KST" : "");
+
 export default function Home() {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -20,7 +22,7 @@ export default function Home() {
         <div className="absolute inset-0 z-0">
           {/* Replace the src below with your actual forest image path */}
           <img
-            src="/parotaktshang.png"
+            src={`${BASE}/parotaktshang.png`}
             alt=""
             className="absolute inset-0 w-full h-full object-cover"
           />

@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { destinations as places } from '@/app/data/destination'
 
 const PER_PAGE = 2
-const BASE = process.env.NODE_ENV === 'production' ? '/travel-with-KST' : ''
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? (process.env.NODE_ENV === 'production' ? '/travel-with-KST' : '')
 
 function Destination() {
   const [page, setPage] = useState(0)

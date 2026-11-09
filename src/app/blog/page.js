@@ -6,7 +6,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-const publicImageBase = process.env.NODE_ENV === 'production' ? '/travel-with-KST' : '';
+const publicImageBase = process.env.NEXT_PUBLIC_BASE_PATH ?? (process.env.NODE_ENV === 'production' ? '/travel-with-KST' : '');
 
 // --- Mock Data ---
 const blogPosts = [

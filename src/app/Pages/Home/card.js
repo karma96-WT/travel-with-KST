@@ -2,51 +2,53 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? (process.env.NODE_ENV === "production" ? "/travel-with-KST" : "");
+
 const cards = [
   {
-    image: "/images/forest.jpg",
+    image: `${BASE}/images/forest.jpg`,
     category: "PRODUCT DESIGN",
     title: "Design Inspiration",
     author: "Alex Morgan",
     artwork: "linear-gradient(145deg, #310819, #170b31, #fa4c91)",
   },
   {
-    image: "/images/culture.jpg",
+    image: `${BASE}/images/culture.jpg`,
     category: "PRODUCT DESIGN",
     title: "Design for Tomorrow",
     author: "Sarah Chen",
     artwork: "linear-gradient(150deg, #27051d, #b71f76, #ff9d6a)",
   },
   {
-    image: "/images/mountains.jpg",
+    image: `${BASE}/images/mountains.jpg`,
     category: "PRODUCT DESIGN",
     title: "Product for UI Designers",
     author: "Alan Turing",
     artwork: "linear-gradient(135deg, #ff574d, #8b9cf5, #f600cf)",
   },
   {
-    image: "/images/valley.jpg",
+    image: `${BASE}/images/valley.jpg`,
     category: "PRODUCT DESIGN",
     title: "Product Vision 2023",
     author: "Alan John",
     artwork: "linear-gradient(125deg, #ffad9a, #7c12ed, #12045b, #c62cb5)",
   },
   {
-    image: "/parotaktshang.png",
+    image: `${BASE}/parotaktshang.png`,
     category: "PRODUCT DESIGN",
     title: "Design For Impact",
     author: "Aman Kamel",
     artwork: "linear-gradient(145deg, #260516, #700d4e, #08065b, #f5429e)",
   },
   {
-    image: "/images/culture.jpg",
+    image: `${BASE}/images/culture.jpg`,
     category: "PRODUCT DESIGN",
     title: "Creative Direction",
     author: "Mia Parker",
     artwork: "linear-gradient(140deg, #19051e, #790c54, #08004b, #ed348b)",
   },
   {
-    image: "/images/forest.jpg",
+    image: `${BASE}/images/forest.jpg`,
     category: "PRODUCT DESIGN",
     title: "Design For Everyone",
     author: "Noah Williams",
