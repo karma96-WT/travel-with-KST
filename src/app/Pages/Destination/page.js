@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { destinations as places } from '@/app/data/destination'
 
 const PER_PAGE = 2
+const BASE = process.env.NODE_ENV === 'production' ? '/travel-with-KST' : ''
 
 function Destination() {
   const [page, setPage] = useState(0)
@@ -21,7 +22,7 @@ function Destination() {
   return (
     <div
       style={{
-        backgroundImage: "url('/images/Destination-background-image.jpg')",
+        backgroundImage: `url('${BASE}/images/Destination-background-image.jpg')`,
       }}
       className="flex justify-around p-10 bg-cover bg-center w-full min-h-screen"
     >
@@ -58,7 +59,7 @@ function Destination() {
                 className="block border-2 border-white rounded-lg w-[50%] bg-white overflow-hidden"
               >
                 <img
-                  src={place.image}
+                  src={`${BASE}${place.image}`}
                   alt={place.title}
                   className="w-full h-48 object-cover rounded-t-lg"
                 />
