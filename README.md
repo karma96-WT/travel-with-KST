@@ -1,7 +1,10 @@
 # travel-with-KST
+
 # https://karma96-wt.github.io/travel-with-KST/
 
 Travel agency website
+
+Travel with KST is a modern, responsive travel-agency website showcasing journeys across Bhutan and the Himalayas. Built with Next.js, React, and Tailwind CSS, it presents a homepage, curated destinations, thoughtfully planned tour packages, inspiring travel stories, and an About section reflecting the company's mission and values. The homepage hero carousel refreshes with content drawn from destinations, packages, and blog posts, each linking to its dedicated page, while consistent navigation highlights the current section. Designed for travelers seeking authentic, sustainable Himalayan experiences, the site is optimized for GitHub Pages static hosting and delivers smooth animations, accessible interactions, and full mobile responsiveness.
 
 ## Local development
 
@@ -55,6 +58,7 @@ Before the first automated deployment:
    ```
 
    Build a kubeconfig for the `github-deployer` service account and add it as the repository Actions secret `KUBE_CONFIG`. That account is limited to deployments, services, ingress, and replica-set rollout status in the app namespace.
+
 3. Set the repository variable `K8S_DEPLOY_ENABLED` to `true`. The image is public on Docker Hub, so Kubernetes does not need a registry pull secret.
 4. Ensure the repository's Actions are enabled. A push to `main` then runs the container release pipeline.
 
