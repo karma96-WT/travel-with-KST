@@ -10,13 +10,15 @@ import {
   FaPhoneAlt 
 } from "react-icons/fa";
 
+const BASE = process.env.NODE_ENV === 'production' ? '/travel-with-KST' : ''
+
 function Footer() {
   return (
     <footer className="footer-container">
       {/* Left Column: Logo & Tagline */}
       <div className="footer-column footer-brand">
         <img
-          src="images/logo.jpeg"
+          src={`${BASE}/images/logo.jpeg`}
           alt="Logo"
           className="footer-logo"
         />
@@ -57,48 +59,48 @@ function Footer() {
         <h3 className="footer-heading">Contacts</h3>
         <div className="social-icons">
           <a 
-        href="#" 
-        className="w-10 h-10 rounded-full border-2 border-gray-900 flex items-center justify-center text-gray-900  hover:text-white transition-all duration-200 hover:-translate-y-1"
-        aria-label="Facebook"
-      >
-        <FaFacebookF className="text-lg" />
-      </a>
+            href="#" 
+            className="w-10 h-10 rounded-full border-2 border-gray-900 flex items-center justify-center text-gray-900 hover:text-white transition-all duration-200 hover:-translate-y-1"
+            aria-label="Facebook"
+          >
+            <FaFacebookF className="text-lg" />
+          </a>
 
-      {/* Instagram */}
-      <a 
-        href="#" 
-        className="w-10 h-10 rounded-full border-2 border-gray-900 flex items-center justify-center text-gray-900 hover:text-white transition-all duration-200 hover:-translate-y-1"
-        aria-label="Instagram"
-      >
-        <FaInstagram className="text-xl" />
-      </a>
+          {/* Instagram */}
+          <a 
+            href="#" 
+            className="w-10 h-10 rounded-full border-2 border-gray-900 flex items-center justify-center text-gray-900 hover:text-white transition-all duration-200 hover:-translate-y-1"
+            aria-label="Instagram"
+          >
+            <FaInstagram className="text-xl" />
+          </a>
 
-      {/* WhatsApp */}
-      <a 
-        href="#" 
-        className="w-10 h-10 rounded-full border-2 border-gray-900 flex items-center justify-center text-gray-900  hover:text-white transition-all duration-200 hover:-translate-y-1"
-        aria-label="WhatsApp"
-      >
-        <FaWhatsapp className="text-xl" />
-      </a>
+          {/* WhatsApp */}
+          <a 
+            href="#" 
+            className="w-10 h-10 rounded-full border-2 border-gray-900 flex items-center justify-center text-gray-900 hover:text-white transition-all duration-200 hover:-translate-y-1"
+            aria-label="WhatsApp"
+          >
+            <FaWhatsapp className="text-xl" />
+          </a>
 
-      {/* Email */}
-      <a 
-        href="#" 
-        className="w-10 h-10 rounded-full border-2 border-gray-900 flex items-center justify-center text-gray-900  hover:text-white transition-all duration-200 hover:-translate-y-1"
-        aria-label="Email"
-      >
-        <FaEnvelope className="text-lg" />
-      </a>
+          {/* Email */}
+          <a 
+            href="#" 
+            className="w-10 h-10 rounded-full border-2 border-gray-900 flex items-center justify-center text-gray-900 hover:text-white transition-all duration-200 hover:-translate-y-1"
+            aria-label="Email"
+          >
+            <FaEnvelope className="text-lg" />
+          </a>
 
-      {/* Phone */}
-      <a 
-        href="#" 
-        className="w-10 h-10 rounded-full border-2 border-gray-900 flex items-center justify-center text-gray-900  hover:text-white transition-all duration-200 hover:-translate-y-1"
-        aria-label="Phone"
-      >
-        <FaPhoneAlt className="text-base" />
-      </a>
+          {/* Phone */}
+          <a 
+            href="#" 
+            className="w-10 h-10 rounded-full border-2 border-gray-900 flex items-center justify-center text-gray-900 hover:text-white transition-all duration-200 hover:-translate-y-1"
+            aria-label="Phone"
+          >
+            <FaPhoneAlt className="text-base" />
+          </a>
         </div>
       </div>
     </footer>
