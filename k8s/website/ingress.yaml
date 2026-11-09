@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: travel-with-kst
+  namespace: travel-with-kst
+  labels:
+    app.kubernetes.io/name: travel-with-kst
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: travel-with-kst.test
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: travel-with-kst
+                port:
+                  number: 80
