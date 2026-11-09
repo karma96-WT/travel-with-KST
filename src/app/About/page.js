@@ -245,12 +245,26 @@ export default function About() {
               </p>
             </div>
             <div className="relative">
-              <div className="rounded-2xl overflow-hidden border-2 border-white/20">
-                <img
-                  src={`${basePath}/images/logo.jpeg`}
-                  alt="KST Team"
-                  className="w-full h-full object-cover"
-                />
+              <div className="relative overflow-hidden rounded-2xl border border-white/10 backdrop-blur-xl bg-transparent">
+                <style jsx>{`
+                  @keyframes marquee {
+                    0% { transform: translateX(0); }
+                    100% { transform: translateX(-50%); }
+                  }
+                  .marquee-track {
+                    animation: marquee 40s linear infinite;
+                  }
+                `}</style>
+                <div className="flex gap-6 w-max marquee-track">
+                  {[1, 2, 3, 4, 5, 1, 2, 3, 4, 5].map((i, idx) => (
+                    <img
+                      key={`${i}-${idx}`}
+                      src={`${basePath}/bg${i}.jpg`}
+                      alt={`Story ${i}`}
+                      className="w-[448px] h-[448px] sm:w-[538px] sm:h-[538px] lg:w-[490px] lg:h-[490px] object-cover rounded-xl flex-shrink-0"
+                    />
+                  ))}
+                </div>
               </div>
               {/* Decorative element */}
               <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-[#e8572a] rounded-2xl opacity-20" />
@@ -317,7 +331,7 @@ export default function About() {
             Let us craft your perfect Bhutanese adventure. Contact us today to
             start planning your transformative experience.
           </p>
-          <button className="group relative inline-flex items-center gap-2 bg-[#e8572a] hover:bg-[#d44a20] text-white font-semibold px-7 py-3.5 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-orange-500/30 active:scale-95">
+          <button onClick={() => document.getElementById('contacts')?.scrollIntoView({ behavior: 'smooth' })} className="group relative inline-flex items-center gap-2 bg-[#e8572a] hover:bg-[#d44a20] text-white font-semibold px-7 py-3.5 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-orange-500/30 active:scale-95 cursor-pointer">
             <span>Contact Us</span>
             <svg
               className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
@@ -335,6 +349,7 @@ export default function About() {
           </button>
         </div>
       </section>
+
     </div>
   );
 }
