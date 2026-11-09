@@ -141,10 +141,10 @@ export default function About() {
 
           <div className="max-w-4xl mx-auto">
             <p className="text-white/80 text-lg leading-relaxed text-center mb-8">
-              At Travel with KST, we believe that travel is more than just visiting places—it's about immersing yourself in cultures, connecting with nature, and creating memories that last a lifetime. Our mission is to provide authentic, sustainable, and transformative travel experiences in the mystical kingdom of Bhutan and beyond.
+              At Travel with KST, we believe that travel is more than just visiting places—it&apos;s about immersing yourself in cultures, connecting with nature, and creating memories that last a lifetime. Our mission is to provide authentic, sustainable, and transformative travel experiences in the mystical kingdom of Bhutan and beyond.
             </p>
             <p className="text-white/80 text-lg leading-relaxed text-center">
-              We are committed to preserving Bhutan's rich cultural heritage while sharing its beauty with the world. Every journey we craft is designed to be respectful of local traditions, environmentally conscious, and deeply enriching for our travelers.
+              We are committed to preserving Bhutan&apos;s rich cultural heritage while sharing its beauty with the world. Every journey we craft is designed to be respectful of local traditions, environmentally conscious, and deeply enriching for our travelers.
             </p>
           </div>
         </div>
@@ -216,7 +216,7 @@ export default function About() {
                 From the ancient monasteries perched on cliff edges to the serene valleys dotted with prayer flags, we know the hidden gems that make Bhutan truly special. Our team of expert guides, cultural experts, and adventure specialists work together to craft experiences that go beyond typical tourism.
               </p>
               <p className="text-white/80 text-lg leading-relaxed">
-                Whether you're seeking spiritual enlightenment, thrilling adventures, or peaceful retreats, we are here to make your Bhutanese dream a reality.
+                Whether you&apos;re seeking spiritual enlightenment, thrilling adventures, or peaceful retreats, we are here to make your Bhutanese dream a reality.
               </p>
             </div>
             <div className="relative">
