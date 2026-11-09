@@ -6,9 +6,9 @@ metadata:
   labels:
     app.kubernetes.io/name: travel-with-kst
 spec:
-  ingressClassName: nginx
+  ingressClassName: traefik
   rules:
-    - host: travel-with-kst.local
+    - host: travel-with-kst.test
       http:
         paths:
           - path: /

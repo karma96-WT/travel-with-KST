@@ -67,27 +67,40 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: write
+    env:
+      DOCKERHUB_USERNAME: ${{ vars.DOCKERHUB_USERNAME }}
     outputs:
       image: ${{ steps.image.outputs.name }}
     steps:
       - name: Check out source
         uses: actions/checkout@v7
 
+      - name: Validate Docker Hub credentials
+        env:
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+        run: |
+          if [ -z "$DOCKERHUB_USERNAME" ]; then
+            echo "::error::Add the DOCKERHUB_USERNAME repository variable."
+            exit 1
+          fi
+          if [ -z "$DOCKERHUB_TOKEN" ]; then
+            echo "::error::Add the DOCKERHUB_TOKEN repository secret with Read & Write access."
+            exit 1
+          fi
+
       - name: Set lowercase image name
         id: image
         shell: bash
-        run: echo "name=ghcr.io/${GITHUB_REPOSITORY,,}" >> "$GITHUB_OUTPUT"
+        run: echo "name=docker.io/${DOCKERHUB_USERNAME,,}/travel-with-kst" >> "$GITHUB_OUTPUT"
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Log in to GitHub Container Registry
+      - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and publish image
         uses: docker/build-push-action@v6
@@ -107,15 +120,15 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: write
       security-events: write
+    env:
+      DOCKERHUB_USERNAME: ${{ vars.DOCKERHUB_USERNAME }}
     steps:
-      - name: Log in to GitHub Container Registry
+      - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Scan image for vulnerabilities
         uses: aquasecurity/trivy-action@v0.36.0
@@ -148,7 +161,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: read
     steps:
       - name: Check out source
         uses: actions/checkout@v7
@@ -159,14 +171,9 @@ jobs:
       - name: Validate deployment secrets
         env:
           KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
-          GHCR_PULL_TOKEN: ${{ secrets.GHCR_PULL_TOKEN }}
         run: |
           if [ -z "$KUBE_CONFIG" ]; then
             echo "::error::Add the KUBE_CONFIG repository secret with the target cluster kubeconfig."
-            exit 1
-          fi
-          if [ -z "$GHCR_PULL_TOKEN" ]; then
-            echo "::error::Add GHCR_PULL_TOKEN with a GitHub token that has read:packages access."
             exit 1
           fi
 
@@ -178,20 +185,11 @@ jobs:
           printf '%s' "$KUBE_CONFIG" > "$RUNNER_TEMP/kubeconfig"
           echo "KUBECONFIG=$RUNNER_TEMP/kubeconfig" >> "$GITHUB_ENV"
 
-      - name: Create GHCR pull secret
-        env:
-          GHCR_USERNAME: ${{ github.repository_owner }}
-          GHCR_PULL_TOKEN: ${{ secrets.GHCR_PULL_TOKEN }}
-        run: |
-          kubectl create secret docker-registry ghcr-pull-secret \
-            --namespace travel-with-kst \
-            --docker-server=ghcr.io \
-            --docker-username="$GHCR_USERNAME" \
-            --docker-password="$GHCR_PULL_TOKEN" \
-            --dry-run=client -o yaml | kubectl apply -f -
-
       - name: Apply Kubernetes resources
-        run: kubectl apply -k k8s/website
+        run: |
+          kubectl apply -f k8s/website/deployment.yaml \
+            -f k8s/website/service.yaml \
+            -f k8s/website/ingress.yaml
 
       - name: Update image and wait for rollout
         id: rollout

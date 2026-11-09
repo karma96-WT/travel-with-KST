@@ -30,11 +30,9 @@ spec:
         runAsGroup: 101
         seccompProfile:
           type: RuntimeDefault
-      imagePullSecrets:
-        - name: ghcr-pull-secret
       containers:
         - name: website
-          image: ghcr.io/karma96-wt/travel-with-kst:latest
+          image: docker.io/laxuman11/travel-with-kst:latest
           imagePullPolicy: Always
           ports:
             - name: http
