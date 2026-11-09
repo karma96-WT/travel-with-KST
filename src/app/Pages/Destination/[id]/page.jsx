@@ -1,6 +1,8 @@
 import { notFound } from 'next/navigation'
 import { destinations, getDestination } from '@/app/data/destination'
-import BackButton from '@/app/Components/BackButton'
+import Link from 'next/link'
+
+const BASE = process.env.NODE_ENV === 'production' ? '/travel-with-KST' : ''
 
 // Needed for static export (GitHub Pages): builds one page per destination
 export function generateStaticParams() {
@@ -26,16 +28,18 @@ export default async function DestinationDetails({ params }) {
   return (
     <div
       style={{
-        backgroundImage: "url('/images/Destination-background-image.jpg')",
+        backgroundImage: `url('${BASE}/images/Destination-background-image.jpg')`,
       }}
       className="bg-cover bg-center w-full min-h-screen p-10"
     >
       <div className="max-w-4xl mx-auto">
-        <BackButton />
+        <Link href="/Pages/Destination" className="text-white">
+          ← Back to Destinations
+        </Link>
 
         <div className="bg-white rounded-lg overflow-hidden mt-4">
           <img
-            src={place.image}
+            src={`${BASE}${place.image}`}
             alt={place.title}
             className="w-full h-72 object-cover"
           />
