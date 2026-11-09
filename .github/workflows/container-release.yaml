@@ -124,6 +124,7 @@ jobs:
           format: sarif
           output: trivy-results.sarif
           severity: HIGH,CRITICAL
+          limit-severities-for-sarif: true
           ignore-unfixed: true
           exit-code: "1"
 
@@ -143,7 +144,7 @@ jobs:
 
   deploy-kubernetes:
     needs: [publish-image, scan-image]
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && vars.K8S_DEPLOY_ENABLED == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: read
