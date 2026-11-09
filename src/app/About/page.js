@@ -163,22 +163,18 @@ export default function About() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               {
-                icon: "🏔️",
                 title: "Authenticity",
                 desc: "We provide genuine experiences that connect you with the heart and soul of Bhutanese culture.",
               },
               {
-                icon: "🌱",
                 title: "Sustainability",
                 desc: "We are committed to eco-friendly practices that protect Bhutan's pristine environment.",
               },
               {
-                icon: "🤝",
                 title: "Community",
                 desc: "We support local communities and ensure tourism benefits reach the people of Bhutan.",
               },
               {
-                icon: "✨",
                 title: "Excellence",
                 desc: "We deliver exceptional service and meticulously crafted journeys that exceed expectations.",
               },
@@ -187,9 +183,6 @@ export default function About() {
                 key={idx}
                 className="group p-8 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-500 hover:-translate-y-2"
               >
-                <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">
-                  {value.icon}
-                </div>
                 <h3 className="text-white text-xl font-bold mb-3">
                   {value.title}
                 </h3>
@@ -220,12 +213,26 @@ export default function About() {
               </p>
             </div>
             <div className="relative">
-              <div className="rounded-2xl overflow-hidden border-2 border-white/20">
-                <img
-                  src={`${basePath}/images/logo.jpeg`}
-                  alt="KST Team"
-                  className="w-full h-full object-cover"
-                />
+              <div className="relative overflow-hidden rounded-2xl border border-white/10 backdrop-blur-xl bg-transparent">
+                <style jsx>{`
+                  @keyframes marquee {
+                    0% { transform: translateX(0); }
+                    100% { transform: translateX(-50%); }
+                  }
+                  .marquee-track {
+                    animation: marquee 40s linear infinite;
+                  }
+                `}</style>
+                <div className="flex gap-6 w-max marquee-track">
+                  {[1, 2, 3, 4, 5, 1, 2, 3, 4, 5].map((i, idx) => (
+                    <img
+                      key={`${i}-${idx}`}
+                      src={`${basePath}/bg${i}.jpg`}
+                      alt={`Story ${i}`}
+                      className="w-[448px] h-[448px] sm:w-[538px] sm:h-[538px] lg:w-[490px] lg:h-[490px] object-cover rounded-xl flex-shrink-0"
+                    />
+                  ))}
+                </div>
               </div>
               {/* Decorative element */}
               <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-[#e8572a] rounded-2xl opacity-20" />
@@ -289,7 +296,7 @@ export default function About() {
           <p className="text-white/80 text-lg mb-10 max-w-2xl mx-auto">
             Let us craft your perfect Bhutanese adventure. Contact us today to start planning your transformative experience.
           </p>
-          <button className="group relative inline-flex items-center gap-2 bg-[#e8572a] hover:bg-[#d44a20] text-white font-semibold px-7 py-3.5 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-orange-500/30 active:scale-95">
+          <button onClick={() => document.getElementById('contacts')?.scrollIntoView({ behavior: 'smooth' })} className="group relative inline-flex items-center gap-2 bg-[#e8572a] hover:bg-[#d44a20] text-white font-semibold px-7 py-3.5 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-orange-500/30 active:scale-95 cursor-pointer">
             <span>Contact Us</span>
             <svg
               className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
@@ -307,6 +314,7 @@ export default function About() {
           </button>
         </div>
       </section>
+
     </div>
   );
 }
