@@ -13,7 +13,12 @@ ARG NEXT_PUBLIC_BASE_PATH=
 ENV NEXT_PUBLIC_BASE_PATH=${NEXT_PUBLIC_BASE_PATH}
 RUN pnpm build
 
-FROM nginxinc/nginx-unprivileged:alpine AS runtime
+FROM nginxinc/nginx-unprivileged:alpine3.24 AS runtime
+
+# Install the latest patched Alpine packages available at image build time.
+USER root
+RUN apk -U upgrade --no-cache
+USER 101
 
 COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /app/out /usr/share/nginx/html
