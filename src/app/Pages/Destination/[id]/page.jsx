@@ -32,7 +32,7 @@ export default async function DestinationDetails({ params }) {
       }}
       className="bg-cover bg-center w-full min-h-screen p-10"
     >
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-4xl mx-auto mt-20">
         <Link href="/Pages/Destination" className="text-white">
           ← Back to Destinations
         </Link>
