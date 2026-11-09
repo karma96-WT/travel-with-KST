@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-const publicImageBase = process.env.NODE_ENV === "production" ? "/travel-with-KST" : "";
+const publicImageBase = process.env.NEXT_PUBLIC_BASE_PATH ?? (process.env.NODE_ENV === "production" ? "/travel-with-KST" : "");
 
 /* --- Data --- */
 const journeys = [

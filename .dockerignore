@@ -1,0 +1,11 @@
+.git
+.github
+.next
+node_modules
+out
+coverage
+*.log
+.env*
+travel_with_kst
+k8s
+tests

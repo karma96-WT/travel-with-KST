@@ -10,7 +10,7 @@ import {
   FaPhoneAlt 
 } from "react-icons/fa";
 
-const BASE = process.env.NODE_ENV === 'production' ? '/travel-with-KST' : ''
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? (process.env.NODE_ENV === 'production' ? '/travel-with-KST' : '')
 
 function Footer() {
   return (

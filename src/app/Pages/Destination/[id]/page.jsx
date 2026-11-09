@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import { destinations, getDestination } from '@/app/data/destination'
 import Link from 'next/link'
 
-const BASE = process.env.NODE_ENV === 'production' ? '/travel-with-KST' : ''
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? (process.env.NODE_ENV === 'production' ? '/travel-with-KST' : '')
 
 // Needed for static export (GitHub Pages): builds one page per destination
 export function generateStaticParams() {

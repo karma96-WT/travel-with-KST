@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-const basePath = process.env.NODE_ENV === 'production' ? '/travel-with-KST' : '';
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? (process.env.NODE_ENV === 'production' ? '/travel-with-KST' : '');
 
 export default function About() {
   const [isVisible, setIsVisible] = useState(false);

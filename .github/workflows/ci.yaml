@@ -14,21 +14,24 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
       - name: Setup Node.js
         uses: actions/setup-node@v7
         with:
-          node-version: 20
-          cache: "npm"
-          cache-dependency-path: package-lock.json
+          node-version: 22
+          cache: "pnpm"
+          cache-dependency-path: pnpm-lock.yaml
 
       - name: Install dependencies
-        run: npm install
+        run: pnpm install --frozen-lockfile
 
       - name: Check code formatting/linting
-        run: npm run lint --if-present
-
-      - name: Run automated tests
-        run: npm test --if-present
+        run: pnpm lint
 
       - name: Build project
-        run: npm run build
+        run: pnpm build
+
+      - name: Test generated static site
+        run: pnpm test
