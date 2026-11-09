@@ -1,66 +1,81 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import { destinations } from "@/app/data/destination";
+import { journeys } from "@/app/packages/PackagesClient";
+import { blogPosts } from "@/app/blog/page.js";
 
-const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? (process.env.NODE_ENV === "production" ? "/travel-with-KST" : "");
+const BASE = process.env.NODE_ENV === "production" ? "/travel-with-KST" : "";
 
-const cards = [
-  {
-    image: `${BASE}/images/forest.jpg`,
-    category: "PRODUCT DESIGN",
-    title: "Design Inspiration",
-    author: "Alex Morgan",
-    artwork: "linear-gradient(145deg, #310819, #170b31, #fa4c91)",
-  },
-  {
-    image: `${BASE}/images/culture.jpg`,
-    category: "PRODUCT DESIGN",
-    title: "Design for Tomorrow",
-    author: "Sarah Chen",
-    artwork: "linear-gradient(150deg, #27051d, #b71f76, #ff9d6a)",
-  },
-  {
-    image: `${BASE}/images/mountains.jpg`,
-    category: "PRODUCT DESIGN",
-    title: "Product for UI Designers",
-    author: "Alan Turing",
-    artwork: "linear-gradient(135deg, #ff574d, #8b9cf5, #f600cf)",
-  },
-  {
-    image: `${BASE}/images/valley.jpg`,
-    category: "PRODUCT DESIGN",
-    title: "Product Vision 2023",
-    author: "Alan John",
-    artwork: "linear-gradient(125deg, #ffad9a, #7c12ed, #12045b, #c62cb5)",
-  },
-  {
-    image: `${BASE}/parotaktshang.png`,
-    category: "PRODUCT DESIGN",
-    title: "Design For Impact",
-    author: "Aman Kamel",
-    artwork: "linear-gradient(145deg, #260516, #700d4e, #08065b, #f5429e)",
-  },
-  {
-    image: `${BASE}/images/culture.jpg`,
-    category: "PRODUCT DESIGN",
-    title: "Creative Direction",
-    author: "Mia Parker",
-    artwork: "linear-gradient(140deg, #19051e, #790c54, #08004b, #ed348b)",
-  },
-  {
-    image: `${BASE}/images/forest.jpg`,
-    category: "PRODUCT DESIGN",
-    title: "Design For Everyone",
-    author: "Noah Williams",
-    artwork: "linear-gradient(135deg, #3c0924, #7d105b, #070b62, #d82da1)",
-  },
+// Gradient shown as a backdrop/fallback behind each hero card, keyed by the
+// page the content came from.
+const artworkByType = {
+  destination: "linear-gradient(145deg, #06261a, #17492f, #2e7d54)",
+  package: "linear-gradient(140deg, #2a1608, #6d3a15, #d4691f)",
+  story: "linear-gradient(135deg, #0b213f, #1c3f6e, #3a72b0)",
+};
+
+// One flat pool built from the existing exported data of the Destination,
+// Packages and Blog pages, so the hero cards reuse real site content instead
+// of the old placeholder "PRODUCT DESIGN" cards. No page component is copied.
+const cardPool = [
+  ...destinations.map((place) => ({
+    id: `destination-${place.id}`,
+    type: "destination",
+    image: `${BASE}${place.image}`,
+    category: "DESTINATION",
+    title: place.title,
+    author: place.location,
+    artwork: artworkByType.destination,
+    href: `/Pages/Destination/${place.id}`,
+  })),
+  ...journeys.map((journey) => ({
+    id: `package-${journey.id}`,
+    type: "package",
+    image: `${BASE}/images/${journey.image}`,
+    category: "JOURNEY",
+    title: journey.name,
+    author: `${journey.route} \u00b7 ${journey.days} days`,
+    artwork: artworkByType.package,
+    href: "/packages",
+  })),
+  ...blogPosts.map((post) => ({
+    id: `story-${post.id}`,
+    type: "story",
+    image: post.image,
+    category: post.category ? post.category.toUpperCase() : "STORY",
+    title: post.title,
+    author: post.date,
+    artwork: artworkByType.story,
+    href: "/blog",
+  })),
 ];
+
+// Number of cards in the carousel (kept the same as the original layout).
+const CARD_COUNT = 7;
+
+const shuffle = (arr) => {
+  const copy = [...arr];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+};
+
+// A random draw from the pool.
+const pickCards = () => shuffle(cardPool).slice(0, CARD_COUNT);
 
 export default function Card() {
   const trackRef = useRef(null);
   const cardRefs = useRef([]);
   const activeRef = useRef(0);
+  const router = useRouter();
 
+  // Deterministic first draw keeps the server render and hydration identical;
+  // a random shuffle is applied on mount and re-rolled every minute.
+  const [cards, setCards] = useState(() => cardPool.slice(0, CARD_COUNT));
   const [activeIndex, setActiveIndex] = useState(0);
 
   const scrollToCard = useCallback((index, behavior = "smooth") => {
@@ -76,7 +91,7 @@ export default function Card() {
 
   const moveTo = useCallback(
     (requestedIndex, behavior = "smooth") => {
-      const index = Math.max(0, Math.min(requestedIndex, cards.length - 1));
+      const index = Math.max(0, Math.min(requestedIndex, CARD_COUNT - 1));
 
       activeRef.current = index;
       setActiveIndex(index);
@@ -147,6 +162,31 @@ export default function Card() {
     };
   }, [updateActiveCard]);
 
+  // Re-roll the hero content once on mount (replacing the deterministic SSR
+  // draw with a random one) and then every 60 seconds.
+  useEffect(() => {
+    let frame = null;
+
+    const roll = () => {
+      setCards(pickCards());
+      activeRef.current = 0;
+      setActiveIndex(0);
+      if (frame !== null) cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        scrollToCard(0, "instant");
+        updateActiveCard();
+        frame = null;
+      });
+    };
+
+    roll();
+    const timer = setInterval(roll, 60000);
+    return () => {
+      clearInterval(timer);
+      if (frame !== null) cancelAnimationFrame(frame);
+    };
+  }, [scrollToCard, updateActiveCard]);
+
   const goToNext = useCallback(() => {
     moveTo(activeRef.current + 1);
   }, [moveTo]);
@@ -168,7 +208,7 @@ export default function Card() {
           WebkitOverflowScrolling: "touch",
           touchAction: "pan-x pan-y",
         }}
-        aria-label="Featured product design cards"
+        aria-label="Featured destinations, journeys and stories"
       >
         {cards.map((card, index) => {
           const distance = Math.abs(index - activeIndex);
@@ -190,11 +230,11 @@ export default function Card() {
 
           return (
             <article
-              key={card.title}
+              key={card.id}
               ref={(element) => {
                 cardRefs.current[index] = element;
               }}
-              onClick={() => moveTo(index)}
+              onClick={() => router.push(card.href)}
               className="
                 relative isolate flex flex-none flex-col justify-end
                 overflow-hidden rounded-[17px] snap-center cursor-pointer

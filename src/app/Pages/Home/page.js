@@ -2,7 +2,41 @@
 
 // home.js
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import Card from "./card";
+import { destinations } from "@/app/data/destination";
+import { DestinationCard } from "@/app/Pages/Destination/page.js";
+import { journeys, JourneyCard } from "@/app/packages/PackagesClient";
+import { blogPosts, BlogCard } from "@/app/blog/page.js";
+import { values, ValueCard } from "@/app/About/page.js";
+
+// Number of items shown per preview section before "Show More".
+const PREVIEW_COUNT = 3;
+
+// Shared "Show More" button that links to a section's dedicated page.
+function ShowMore({ href }) {
+  return (
+    <Link
+      href={href}
+      className="group relative inline-flex items-center gap-2 bg-[#e8572a] hover:bg-[#d44a20] text-white font-semibold px-7 py-3.5 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-orange-500/30 active:scale-95"
+    >
+      <span>Show More</span>
+      <svg
+        className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M17 8l4 4m0 0l-4 4m4-4H3"
+        />
+      </svg>
+    </Link>
+  );
+}
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? (process.env.NODE_ENV === "production" ? "/travel-with-KST" : "");
 
@@ -110,7 +144,10 @@ export default function Home() {
                   : "opacity-0 translate-y-8"
               }`}
             >
-              <button className="group relative inline-flex items-center gap-2 bg-[#e8572a] hover:bg-[#d44a20] text-white font-semibold px-7 py-3.5 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-orange-500/30 active:scale-95">
+              <Link
+                href="/Pages/Destination"
+                className="group relative inline-flex items-center gap-2 bg-[#e8572a] hover:bg-[#d44a20] text-white font-semibold px-7 py-3.5 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-orange-500/30 active:scale-95"
+              >
                 <span>Find a Destinations</span>
                 <svg
                   className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
@@ -125,7 +162,7 @@ export default function Home() {
                     d="M17 8l4 4m0 0l-4 4m4-4H3"
                   />
                 </svg>
-              </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -154,6 +191,86 @@ export default function Home() {
               d="M19 14l-7 7m0 0l-7-7m7 7V3"
             />
           </svg>
+        </div>
+      </section>
+
+      {/* ── Destinations preview (reuses DestinationCard) ── */}
+      <section className="relative py-20 bg-[#0a1f0f]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
+              Explore Destinations
+            </h2>
+            <div className="w-24 h-1 bg-[#e8572a] mx-auto rounded-full" />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {destinations.slice(0, PREVIEW_COUNT).map((place) => (
+              <DestinationCard key={place.id} place={place} />
+            ))}
+          </div>
+          <div className="text-center mt-12">
+            <ShowMore href="/Pages/Destination" />
+          </div>
+        </div>
+      </section>
+
+      {/* ── Packages preview (reuses JourneyCard) ── */}
+      <section className="relative py-20 bg-[#0d2514]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
+              Featured Journeys
+            </h2>
+            <div className="w-24 h-1 bg-[#e8572a] mx-auto rounded-full" />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start">
+            {journeys.slice(0, PREVIEW_COUNT).map((journey) => (
+              <JourneyCard key={journey.id} journey={journey} />
+            ))}
+          </div>
+          <div className="text-center mt-12">
+            <ShowMore href="/packages" />
+          </div>
+        </div>
+      </section>
+
+      {/* ── Blog preview (reuses BlogCard) ── */}
+      <section className="relative py-20 bg-[#0a1f0f]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
+              Latest Travel Stories
+            </h2>
+            <div className="w-24 h-1 bg-[#e8572a] mx-auto rounded-full" />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {blogPosts.slice(0, PREVIEW_COUNT).map((post) => (
+              <BlogCard key={post.id} post={post} />
+            ))}
+          </div>
+          <div className="text-center mt-12">
+            <ShowMore href="/blog" />
+          </div>
+        </div>
+      </section>
+
+      {/* ── About / Values preview (reuses ValueCard) ── */}
+      <section className="relative py-20 bg-[#0d2514]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
+              Our Values
+            </h2>
+            <div className="w-24 h-1 bg-[#e8572a] mx-auto rounded-full" />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {values.slice(0, PREVIEW_COUNT).map((value, idx) => (
+              <ValueCard key={idx} value={value} />
+            ))}
+          </div>
+          <div className="text-center mt-12">
+            <ShowMore href="/About" />
+          </div>
         </div>
       </section>
     </div>

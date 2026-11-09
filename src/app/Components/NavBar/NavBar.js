@@ -3,12 +3,14 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? (process.env.NODE_ENV === 'production' ? '/travel-with-KST' : '')
+const BASE = process.env.NODE_ENV === "production" ? "/travel-with-KST" : "";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setIsScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,10 +28,17 @@ export default function Navbar() {
     { name: "Blog", href: "/blog" },
   ];
 
+  // A link is active when it exactly matches the current route, or when the
+  // current route is a nested page under it (e.g. /Pages/Destination/1).
+  const isActive = (href) =>
+    href === "/"
+      ? pathname === "/"
+      : pathname === href || pathname.startsWith(`${href}/`);
+
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
-        scrolled ? "py-2" : "py-4"
+        scrolled ? "py-0.5" : "py-1.5"
       }`}
     >
       <div className="w-full">
@@ -40,7 +49,7 @@ export default function Navbar() {
               : "bg-transparent"
           }`}
         >
-          <div className="flex items-center justify-between px-6 py-4 sm:px-8">
+          <div className="flex items-center justify-between px-6 py-1 sm:px-8">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-3 group">
               <div className="flex items-center space-x-2">
@@ -54,16 +63,26 @@ export default function Navbar() {
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-1 text-white ml-auto justify-end">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className="relative text-white/90 hover:text-white px-4 py-2 text-sm font-medium tracking-wide transition-all duration-300 group"
-                >
-                  <span className="relative z-10">{link.name}</span>
-                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-white rounded-full group-hover:w-3/4 transition-all duration-300 ease-out" />
-                </Link>
-              ))}
+              {navLinks.map((link) => {
+                const active = isActive(link.href);
+                return (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    aria-current={active ? "page" : undefined}
+                    className={`relative px-4 py-2 text-sm font-medium tracking-wide transition-all duration-300 group ${
+                      active ? "text-white" : "text-white/90 hover:text-white"
+                    }`}
+                  >
+                    <span className="relative z-10">{link.name}</span>
+                    <span
+                      className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 bg-white rounded-full transition-all duration-300 ease-out group-hover:w-3/4 ${
+                        active ? "w-3/4" : "w-0"
+                      }`}
+                    />
+                  </Link>
+                );
+              })}
             </div>
 
             {/* Hamburger Button */}
@@ -98,21 +117,29 @@ export default function Navbar() {
             }`}
           >
             <div className="px-6 pb-6 pt-2 space-y-1 text-white text-right">
-              {navLinks.map((link, index) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  onClick={() => setIsOpen(false)}
-                  className="block text-white/90 hover:text-white hover:bg-white/10 px-4 py-3 rounded-xl text-base font-medium tracking-wide transition-all duration-300"
-                  style={{
-                    transitionDelay: isOpen ? `${index * 50}ms` : "0ms",
-                    transform: isOpen ? "translateX(0)" : "translateX(20px)",
-                    opacity: isOpen ? 1 : 0,
-                  }}
-                >
-                  {link.name}
-                </Link>
-              ))}
+              {navLinks.map((link, index) => {
+                const active = isActive(link.href);
+                return (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    onClick={() => setIsOpen(false)}
+                    aria-current={active ? "page" : undefined}
+                    className={`block px-4 py-3 rounded-xl text-base font-medium tracking-wide transition-all duration-300 ${
+                      active
+                        ? "text-white bg-white/15"
+                        : "text-white/90 hover:text-white hover:bg-white/10"
+                    }`}
+                    style={{
+                      transitionDelay: isOpen ? `${index * 50}ms` : "0ms",
+                      transform: isOpen ? "translateX(0)" : "translateX(20px)",
+                      opacity: isOpen ? 1 : 0,
+                    }}
+                  >
+                    {link.name}
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </div>

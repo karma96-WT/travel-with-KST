@@ -2,7 +2,44 @@
 
 import { useEffect, useState } from "react";
 
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? (process.env.NODE_ENV === 'production' ? '/travel-with-KST' : '');
+const basePath =
+  process.env.NODE_ENV === "production" ? "/travel-with-KST" : "";
+
+// Reused on the About page "Our Values" grid and the homepage preview.
+export const values = [
+  {
+    icon: "🏔️",
+    title: "Authenticity",
+    desc: "We provide genuine experiences that connect you with the heart and soul of Bhutanese culture.",
+  },
+  {
+    icon: "🌱",
+    title: "Sustainability",
+    desc: "We are committed to eco-friendly practices that protect Bhutan's pristine environment.",
+  },
+  {
+    icon: "🤝",
+    title: "Community",
+    desc: "We support local communities and ensure tourism benefits reach the people of Bhutan.",
+  },
+  {
+    icon: "✨",
+    title: "Excellence",
+    desc: "We deliver exceptional service and meticulously crafted journeys that exceed expectations.",
+  },
+];
+
+export function ValueCard({ value }) {
+  return (
+    <div className="group p-8 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-500 hover:-translate-y-2">
+      <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">
+        {value.icon}
+      </div>
+      <h3 className="text-white text-xl font-bold mb-3">{value.title}</h3>
+      <p className="text-white/70 leading-relaxed">{value.desc}</p>
+    </div>
+  );
+}
 
 export default function About() {
   const [isVisible, setIsVisible] = useState(false);
@@ -46,7 +83,8 @@ export default function About() {
               style={{
                 transform: index === currentImage ? "scale(1.20)" : "scale(1)",
                 filter: index === currentImage ? "blur(0px)" : "blur(10px)",
-                transition: "transform 5s ease-out, opacity 1s ease-in-out, filter 1s ease-in-out",
+                transition:
+                  "transform 5s ease-out, opacity 1s ease-in-out, filter 1s ease-in-out",
               }}
             />
           ))}
@@ -123,7 +161,8 @@ export default function About() {
                   : "opacity-0 translate-y-8"
               }`}
             >
-              Journey beyond the ordinary into the pristine heart of the Himalayas with KST
+              Journey beyond the ordinary into the pristine heart of the
+              Himalayas with KST
             </p>
           </div>
         </div>
@@ -141,10 +180,18 @@ export default function About() {
 
           <div className="max-w-4xl mx-auto">
             <p className="text-white/80 text-lg leading-relaxed text-center mb-8">
-              At Travel with KST, we believe that travel is more than just visiting places—it&apos;s about immersing yourself in cultures, connecting with nature, and creating memories that last a lifetime. Our mission is to provide authentic, sustainable, and transformative travel experiences in the mystical kingdom of Bhutan and beyond.
+              At Travel with KST, we believe that travel is more than just
+              visiting places—it&apos;s about immersing yourself in cultures,
+              connecting with nature, and creating memories that last a
+              lifetime. Our mission is to provide authentic, sustainable, and
+              transformative travel experiences in the mystical kingdom of
+              Bhutan and beyond.
             </p>
             <p className="text-white/80 text-lg leading-relaxed text-center">
-              We are committed to preserving Bhutan&apos;s rich cultural heritage while sharing its beauty with the world. Every journey we craft is designed to be respectful of local traditions, environmentally conscious, and deeply enriching for our travelers.
+              We are committed to preserving Bhutan&apos;s rich cultural
+              heritage while sharing its beauty with the world. Every journey we
+              craft is designed to be respectful of local traditions,
+              environmentally conscious, and deeply enriching for our travelers.
             </p>
           </div>
         </div>
@@ -161,33 +208,8 @@ export default function About() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              {
-                title: "Authenticity",
-                desc: "We provide genuine experiences that connect you with the heart and soul of Bhutanese culture.",
-              },
-              {
-                title: "Sustainability",
-                desc: "We are committed to eco-friendly practices that protect Bhutan's pristine environment.",
-              },
-              {
-                title: "Community",
-                desc: "We support local communities and ensure tourism benefits reach the people of Bhutan.",
-              },
-              {
-                title: "Excellence",
-                desc: "We deliver exceptional service and meticulously crafted journeys that exceed expectations.",
-              },
-            ].map((value, idx) => (
-              <div
-                key={idx}
-                className="group p-8 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-500 hover:-translate-y-2"
-              >
-                <h3 className="text-white text-xl font-bold mb-3">
-                  {value.title}
-                </h3>
-                <p className="text-white/70 leading-relaxed">{value.desc}</p>
-              </div>
+            {values.map((value, idx) => (
+              <ValueCard key={idx} value={value} />
             ))}
           </div>
         </div>
@@ -203,13 +225,23 @@ export default function About() {
               </h2>
               <div className="w-24 h-1 bg-[#e8572a] mb-8 rounded-full" />
               <p className="text-white/80 text-lg leading-relaxed mb-6">
-                Travel with KST was born from a deep love for Bhutan and a desire to share its magic with the world. Founded by passionate locals who have spent their lives exploring every corner of this Himalayan kingdom, we bring intimate knowledge and genuine hospitality to every journey we create.
+                Travel with KST was born from a deep love for Bhutan and a
+                desire to share its magic with the world. Founded by passionate
+                locals who have spent their lives exploring every corner of this
+                Himalayan kingdom, we bring intimate knowledge and genuine
+                hospitality to every journey we create.
               </p>
               <p className="text-white/80 text-lg leading-relaxed mb-6">
-                From the ancient monasteries perched on cliff edges to the serene valleys dotted with prayer flags, we know the hidden gems that make Bhutan truly special. Our team of expert guides, cultural experts, and adventure specialists work together to craft experiences that go beyond typical tourism.
+                From the ancient monasteries perched on cliff edges to the
+                serene valleys dotted with prayer flags, we know the hidden gems
+                that make Bhutan truly special. Our team of expert guides,
+                cultural experts, and adventure specialists work together to
+                craft experiences that go beyond typical tourism.
               </p>
               <p className="text-white/80 text-lg leading-relaxed">
-                Whether you&apos;re seeking spiritual enlightenment, thrilling adventures, or peaceful retreats, we are here to make your Bhutanese dream a reality.
+                Whether you&apos;re seeking spiritual enlightenment, thrilling
+                adventures, or peaceful retreats, we are here to make your
+                Bhutanese dream a reality.
               </p>
             </div>
             <div className="relative">
@@ -279,7 +311,9 @@ export default function About() {
                 <h3 className="text-white text-xl font-bold mb-2">
                   {member.name}
                 </h3>
-                <p className="text-[#e8572a] font-semibold mb-4">{member.role}</p>
+                <p className="text-[#e8572a] font-semibold mb-4">
+                  {member.role}
+                </p>
                 <p className="text-white/70 leading-relaxed">{member.desc}</p>
               </div>
             ))}
@@ -294,7 +328,8 @@ export default function About() {
             Ready to Begin Your Journey?
           </h2>
           <p className="text-white/80 text-lg mb-10 max-w-2xl mx-auto">
-            Let us craft your perfect Bhutanese adventure. Contact us today to start planning your transformative experience.
+            Let us craft your perfect Bhutanese adventure. Contact us today to
+            start planning your transformative experience.
           </p>
           <button onClick={() => document.getElementById('contacts')?.scrollIntoView({ behavior: 'smooth' })} className="group relative inline-flex items-center gap-2 bg-[#e8572a] hover:bg-[#d44a20] text-white font-semibold px-7 py-3.5 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-orange-500/30 active:scale-95 cursor-pointer">
             <span>Contact Us</span>
