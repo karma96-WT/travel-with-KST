@@ -4,6 +4,8 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
+const BASE = process.env.NODE_ENV === 'production' ? '/travel-with-KST' : ''
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setIsScrolled] = useState(false);
@@ -43,9 +45,9 @@ export default function Navbar() {
             <Link href="/" className="flex items-center gap-3 group">
               <div className="flex items-center space-x-2">
                 <img
-                  src="images/logo.jpeg"
+                  src={`${BASE}/images/logo.jpeg`}
                   alt="Logo"
-                  className="navbar-logo w-10 h-10"
+                  className="navbar-logo w-16 h-16 rounded-full border-2 border-black"
                 />
               </div>
             </Link>
